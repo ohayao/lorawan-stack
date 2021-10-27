@@ -1,0 +1,200 @@
+// Copyright © 2019 The Things Network Foundation, The Things Industries B.V.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "lorawan-stack/api/identifiers.proto";
+
+package ttn.lorawan.v3;
+
+option go_package = "go.thethings.network/lorawan-stack/v3/pkg/ttnpb";
+
+// TODO: Migrate away from GoGo Protobuf (https://github.com/TheThingsNetwork/lorawan-stack/issues/2798).
+option (gogoproto.enum_stringer_all) = true;
+option (gogoproto.equal_all) = true;
+option (gogoproto.goproto_enum_stringer_all) = false;
+option (gogoproto.goproto_registration) = true;
+option (gogoproto.goproto_stringer_all) = false;
+option (gogoproto.goproto_unrecognized_all) = false;
+option (gogoproto.stringer_all) = true;
+
+message ClaimEndDeviceRequest {
+  message AuthenticatedIdentifiers {
+    // JoinEUI (or AppEUI) of the device to claim.
+    bytes join_eui = 1 [(gogoproto.nullable) = false, (gogoproto.customtype) = "go.thethings.network/lorawan-stack/v3/pkg/types.EUI64"];
+    // DevEUI of the device to claim.
+    bytes dev_eui = 2 [(gogoproto.nullable) = false, (gogoproto.customtype) = "go.thethings.network/lorawan-stack/v3/pkg/types.EUI64"];
+    // Authentication code to prove ownership.
+    // In the LoRa Alliance TR005 specification, this equals the OwnerToken.
+    string authentication_code = 3 [(validate.rules).string.pattern = "^[A-Z0-9]{1,32}$"];
+  }
+  oneof source_device {
+    option (validate.required) = true;
+    // Authenticated identifiers.
+    AuthenticatedIdentifiers authenticated_identifiers = 1;
+    // Raw QR code contents.
+    bytes qr_code = 2 [(validate.rules).bytes = {min_len: 0, max_len: 1024}];
+  }
+
+  // Application identifiers of the target end device.
+  ApplicationIdentifiers target_application_ids = 3 [(gogoproto.nullable) = false, (validate.rules).message.required = true];
+  // End device ID of the target end device. If empty, use the source device ID.
+  string target_device_id = 4 [(validate.rules).string = {pattern: "^[a-z0-9](?:[-]?[a-z0-9]){2,}$|^$" , max_len: 36}];
+  reserved 6; // target_join_eui
+  // The address of the Network Server where the device will be registered.
+  // If set and if the source device is currently registered on a Network Server, settings will be transferred.
+  // If not set, the device shall not be registered on a Network Server.
+  string target_network_server_address = 7 [(validate.rules).string.pattern = "^(?:(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*(?:[A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])(?::[0-9]{1,5})?$|^$"];
+  // The KEK label of the Network Server to use for wrapping network session keys.
+  string target_network_server_kek_label = 8 [(validate.rules).string.max_len = 2048];
+  // The address of the Application Server where the device will be registered.
+  // If set and if the source device is currently registered on an Application Server, settings will be transferred.
+  // If not set, the device shall not be registered on an Application Server.
+  string target_application_server_address = 9 [(validate.rules).string.pattern = "^(?:(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*(?:[A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])(?::[0-9]{1,5})?$|^$"];
+  // The KEK label of the Application Server to use for wrapping the application session key.
+  string target_application_server_kek_label = 10 [(validate.rules).string.max_len = 2048];
+  // The AS-ID of the Application Server to use.
+  string target_application_server_id = 11 [(validate.rules).string.max_len = 100];
+  reserved 12; // target_join_server_address
+  // Home NetID.
+  bytes target_net_id = 13 [(gogoproto.customtype) = "go.thethings.network/lorawan-stack/v3/pkg/types.NetID"];
+
+  // If set, invalidate the authentication code with which the device gets claimed. This prohibits subsequent claiming requests.
+  bool invalidate_authentication_code = 5;
+}
+
+message AuthorizeApplicationRequest {
+  ApplicationIdentifiers application_ids = 1 [(gogoproto.embed) = true, (gogoproto.nullable) = false, (validate.rules).message.required = true];
+  string api_key = 2 [
+    (validate.rules).string = { min_len: 1, max_len: 128 }
+  ];
+}
+
+// The EndDeviceClaimingServer service configures authorization to claim end devices registered in an application,
+// and allows clients to claim end devices.
+service EndDeviceClaimingServer {
+  // Claims the end device by claim authentication code or QR code and transfers the device to the target application.
+  rpc Claim(ClaimEndDeviceRequest) returns (EndDeviceIdentifiers) {
+    option (google.api.http) = {
+      post: "/edcs/claim",
+      body: "*"
+    };
+  };
+
+  // Authorize the End Device Claiming Server to claim devices registered in the given application. The application
+  // identifiers are the source application, where the devices are registered before they are claimed.
+  // The API key is used to access the application, find the device, verify the claim request and delete the end device
+  // from the source application.
+  rpc AuthorizeApplication(AuthorizeApplicationRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/edcs/applications/{application_ids.application_id}/authorize",
+      body: "*"
+    };
+  };
+
+  // Unauthorize the End Device Claiming Server to claim devices in the given application.
+  // This reverts the authorization given with rpc AuthorizeApplication.
+  rpc UnauthorizeApplication(ApplicationIdentifiers) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/edcs/applications/{application_id}/authorize"
+    };
+  };
+}
+
+message CUPSRedirection {
+  // CUPS URI for LoRa Basics Station CUPS redirection.
+  string target_cups_uri = 1 [(validate.rules).string = {uri:true, pattern: "^https", max_len: 256}];
+
+  // The key set in the gateway to authenticate itself.
+  string current_gateway_key = 2 [(validate.rules).string.max_len = 2048];
+
+  // Optional PEM encoded CA Root certificate. If this field is empty, DCS will attempt to dial the Target CUPS server and fetch the CA.
+  bytes target_cups_trust = 3;
+  message ClientTLS {
+    // PEM encoded Client Certificate.
+    bytes cert = 1 [(validate.rules).bytes.max_len = 8192];
+    // PEM encoded Client Private Key.
+    bytes key = 2 [(validate.rules).bytes.max_len = 8192];
+  }
+  // CUPS Credentials for the gateway.
+  oneof gateway_credentials{
+    // TODO: Support mTLS (https://github.com/TheThingsNetwork/lorawan-stack/issues/137)
+    ClientTLS client_tls = 4;
+    // The Device Claiming Server will fill this field with a The Things Stack API Key.
+    string auth_token = 5 [(validate.rules).string.max_len = 2048];
+  }
+}
+
+message ClaimGatewayRequest {
+  message AuthenticatedIdentifiers {
+    bytes gateway_eui = 1 [(gogoproto.nullable) = false, (gogoproto.customtype) = "go.thethings.network/lorawan-stack/v3/pkg/types.EUI64"];
+    bytes authentication_code = 2 [(validate.rules).bytes.max_len = 2048];
+  }
+  oneof source_gateway {
+    option (validate.required) = true;
+    AuthenticatedIdentifiers authenticated_identifiers = 1;
+    bytes qr_code = 2 [(validate.rules).bytes = {min_len: 0, max_len: 1024}];
+  }
+
+  // Collaborator to grant all rights on the target gateway.
+  OrganizationOrUserIdentifiers collaborator = 3 [(gogoproto.nullable) = false, (validate.rules).message.required = true];
+
+  // Gateway ID for the target gateway. This must be a unique value.
+  // If this is not set, the target ID for the target gateway will be set to `<gateway-eui>`.
+  string target_gateway_id = 4 [(validate.rules).string = {pattern: "^[a-z0-9](?:[-]?[a-z0-9]){2,}$|^$" , max_len: 36}];
+
+  // Target Gateway Server Address for the target gateway.
+  string target_gateway_server_address = 5 [(validate.rules).string.pattern = "^(?:(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*(?:[A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])(?::[0-9]{1,5})?$|^$"];
+
+  // Parameters to set CUPS redirection for the gateway.
+  CUPSRedirection cups_redirection = 6;
+
+  // Frequency plan ID of the target gateway.
+  // This equals the first element of the frequency_plan_ids field.
+  string target_frequency_plan_id = 7 [(validate.rules).string.max_len = 64];
+}
+
+message AuthorizeGatewayRequest {
+  GatewayIdentifiers gateway_ids = 1 [(gogoproto.embed) = true, (gogoproto.nullable) = false, (validate.rules).message.required = true];
+  string api_key = 2 [(validate.rules).string.min_len = 1];
+}
+
+service GatewayClaimingServer {
+  // Claims a gateway by claim authentication code or QR code and transfers the gateway to the target user.
+  rpc Claim(ClaimGatewayRequest) returns (GatewayIdentifiers) {
+    option (google.api.http) = {
+      post: "/gcls/claim",
+      body: "*"
+    };
+  };
+
+  // AuthorizeGateway allows a gateway to be claimed.
+  rpc AuthorizeGateway(AuthorizeGatewayRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/gcls/gateways/{gateway_ids.gateway_id}/authorize",
+      body: "*"
+    };
+  };
+
+  // UnauthorizeGateway prevents a gateway from being claimed.
+  rpc UnauthorizeGateway(GatewayIdentifiers) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/gcls/gateways/{gateway_id}/authorize"
+    };
+  };
+}

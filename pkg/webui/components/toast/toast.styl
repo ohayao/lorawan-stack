@@ -1,0 +1,53 @@
+// Copyright © 2019 The Things Network Foundation, The Things Industries B.V.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+div.toast
+  padding: 0
+  bottom: 2rem
+  border-radius: $br.m
+  min-height: 2rem
+
+  .notification
+    margin: 0
+
+.slide-in-right
+  animation: slide-in-right 0.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both
+
+.slide-out-right
+  animation: slide-in-right 0.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both reverse
+
+.beat
+  animation: beat 0.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both
+
+@keyframes slide-in-right
+  0%
+    -webkit-transform: translateX(70rem)
+    transform: translateX(70rem)
+    opacity: 0
+
+  100%
+    -webkit-transform: translateX(0)
+    transform: translateX(0)
+    opacity: 1
+
+@keyframes beat
+  0%
+    -webkit-transform: rotateX(0deg)
+    transform: scale(1.2)
+    opacity: 0
+
+  100%
+    -webkit-transform: rotateX(180deg)
+    transform: scale(1)
+    opacity: 1

@@ -1,0 +1,100 @@
+# Root
+/ @johanstokking @htdvisser
+/CODEOWNERS @johanstokking
+/LICENSE @johanstokking
+
+# Clear common folders
+/pkg
+
+# Dependencies
+/go.mod @johanstokking @htdvisser
+/go.sum @johanstokking @htdvisser
+/package.json @bafonins @kschiffer
+/yarn.lock @bafonins @kschiffer
+/sdk/js/package.json @bafonins @kschiffer
+/sdk/js/yarn.lock @bafonins @kschiffer
+
+# Build pipeline and tooling
+/Makefile @htdvisser @adriansmares @michalborkowski96
+/tools @htdvisser @adriansmares @michalborkowski96
+/.github/workflows @htdvisser @adriansmares @michalborkowski96
+/config @bafonins @kschiffer
+/config/stack @benolayinka @neoaggelos
+/cypress @bafonins @kschiffer
+
+# API, configuration, CLI and storage compatibility
+/api @johanstokking @htdvisser
+/cmd @adriansmares @htdvisser
+/pkg/**/config.go @adriansmares @htdvisser
+/pkg/**/registry.go @adriansmares @htdvisser
+/pkg/config/shared.go @adriansmares @htdvisser
+/pkg/gogoproto @johanstokking @htdvisser
+/pkg/goproto @johanstokking @htdvisser
+/pkg/identityserver/store @johanstokking @htdvisser
+/pkg/jsonpb @johanstokking @htdvisser
+/pkg/ttnpb @johanstokking @htdvisser
+
+# Security
+/pkg/auth @johanstokking @htdvisser
+/pkg/crypto @johanstokking @htdvisser
+
+# Shared components
+/pkg/band @johanstokking @htdvisser @KrishnaIyer
+/pkg/cluster @htdvisser @johanstokking @adriansmares
+/pkg/component @johanstokking @htdvisser
+/pkg/errors @johanstokking @htdvisser
+/pkg/events @htdvisser @adriansmares
+/pkg/frequencyplans @johanstokking @htdvisser @KrishnaIyer
+/pkg/interop @johanstokking @adriansmares
+/pkg/rpcmiddleware @htdvisser @johanstokking @adriansmares
+/pkg/rpcserver @htdvisser @johanstokking @adriansmares
+/pkg/types @johanstokking @htdvisser
+/pkg/web @bafonins @kschiffer
+/pkg/webmiddleware @htdvisser @bafonins @kschiffer
+/pkg/webui @bafonins @kschiffer
+/pkg/ratelimit @johanstokking @htdvisser @neoaggelos
+
+# Subsystems
+
+/pkg/identityserver @htdvisser @bafonins @kschiffer
+/pkg/email @htdvisser @bafonins @kschiffer
+/pkg/oauth @htdvisser @bafonins @kschiffer
+/pkg/account @htdvisser @bafonins @kschiffer
+/pkg/web/oauthclient @htdvisser @bafonins @kschiffer
+
+/pkg/gatewayserver @johanstokking @KrishnaIyer @adriansmares
+/pkg/gatewayconfigurationserver @KrishnaIyer @htdvisser
+/pkg/pfconfig @KrishnaIyer @htdvisser
+/pkg/basicstation @KrishnaIyer @htdvisser
+
+/pkg/networkserver @johanstokking @adriansmares
+/pkg/encoding/lorawan @johanstokking @adriansmares
+
+/pkg/applicationserver @johanstokking @adriansmares @KrishnaIyer
+/pkg/messageprocessors @johanstokking @adriansmares @KrishnaIyer
+/pkg/scripting @johanstokking @adriansmares @KrishnaIyer
+
+/pkg/joinserver @johanstokking @adriansmares
+
+/pkg/console @bafonins @kschiffer
+
+/pkg/packetbrokeragent @johanstokking @adriansmares
+
+/pkg/devicetemplateconverter @adriansmares @neoaggelos
+/pkg/devicetemplates @adriansmares @neoaggelos
+/pkg/qrcode @adriansmares @neoaggelos
+/pkg/qrcodegenerator @adriansmares @neoaggelos
+
+/pkg/devicerepository @adriansmares @neoaggelos
+
+# SDKs
+/sdk/js @bafonins @kschiffer
+
+# Clear generated code
+/api/api.md
+/api/api.swagger.json
+/config/messages.json
+/pkg/ttnpb/*.pb.*.go
+/pkg/ttnpb/*.pb.go
+/pkg/webui/locales/*.json
+/sdk/js/generated

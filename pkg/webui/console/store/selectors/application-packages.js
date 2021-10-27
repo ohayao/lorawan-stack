@@ -1,0 +1,47 @@
+// Copyright © 2020 The Things Network Foundation, The Things Industries B.V.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+import { createFetchingSelector } from '@ttn-lw/lib/store/selectors/fetching'
+import { createErrorSelector } from '@ttn-lw/lib/store/selectors/error'
+
+import {
+  GET_APP_PKG_DEFAULT_ASSOC_BASE,
+  SET_APP_PKG_DEFAULT_ASSOC_BASE,
+  DELETE_APP_PKG_DEFAULT_ASSOC_BASE,
+} from '@console/store/actions/application-packages'
+
+const selectApplicationPackagesStore = state => state.applicationPackages
+
+export const selectApplicationPackageDefaultAssociations = state => {
+  const store = selectApplicationPackagesStore(state)
+
+  return store.default || {}
+}
+export const selectApplicationPackageDefaultAssociation = (state, fPort) =>
+  selectApplicationPackageDefaultAssociations(state)[fPort]
+
+export const selectGetApplicationPackagesError = createErrorSelector(GET_APP_PKG_DEFAULT_ASSOC_BASE)
+export const selectGetApplicationPackagesFetching = createFetchingSelector(
+  GET_APP_PKG_DEFAULT_ASSOC_BASE,
+)
+export const selectSetApplicationPackagesError = createErrorSelector(SET_APP_PKG_DEFAULT_ASSOC_BASE)
+export const selectSetApplicationPackagesFetching = createFetchingSelector(
+  SET_APP_PKG_DEFAULT_ASSOC_BASE,
+)
+export const selectDeleteApplicationPackagesError = createErrorSelector(
+  DELETE_APP_PKG_DEFAULT_ASSOC_BASE,
+)
+export const selectDeleteApplicationPackagesFetching = createFetchingSelector(
+  DELETE_APP_PKG_DEFAULT_ASSOC_BASE,
+)

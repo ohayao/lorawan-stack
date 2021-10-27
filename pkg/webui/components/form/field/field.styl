@@ -1,0 +1,150 @@
+// Copyright © 2019 The Things Network Foundation, The Things Industries B.V.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+.field
+  margin-bottom: $ls.xxs
+  display: flex
+  flex-wrap: wrap
+  width: 100%
+
+  .title
+    font-weight: $fw.bold
+
+    &::after
+      display: none
+
+  &.required
+    .label::after
+      nudge('down')
+      content: '*'
+      font-size: $fs.l
+      display: inline-block
+      line-height: 1
+      color: $c-error
+
+  &:not(.has-tooltip)
+    &.required
+      .label::after
+        margin-left: 0.1rem
+
+  &.grow
+    flex-grow: 1
+
+.field-container
+  display: flex
+  margin-bottom: $ls.xxs
+
+
+  &:not(.horizontal)
+    flex-direction: column
+
+  &.horizontal
+    flex-direction: row
+
+    .field
+      margin-bottom: 0
+
+      &.auto-width
+        width: auto
+        align-content: flex-start
+
+      &:not(:last-child)
+        margin-right: $ls.xxs
+
+.label
+  display: block
+  align-items: flex-start
+  width:  100%
+  flex-shrink: 0
+  user-select: none
+  margin-bottom: $cs.xxs
+  white-space: nowrap
+
+  .title
+    display: inline-block
+
+  .tooltip
+    display: inline-block
+
+    &-icon
+      nudge('up', 1px)
+      color: $tc-subtle-gray
+      padding: .1rem
+      height: 1rem
+      width: 1rem
+      font-size: 1rem
+      line-height: 1
+
+    &-title
+      h4()
+      margin: 0
+
+    &-description
+      margin: 0 0 $cs.s 0
+
+    &-links
+      display: flex
+      justify-content: space-between
+
+.description
+  font-weight: $fw.normal
+  color: $tc-subtle-gray
+
+.component-area
+  flex-shrink: 0
+  width: 100%
+
+.messages
+  flex-shrink: 0
+  width: 100%
+  order: 3
+  margin-top: text-spacing-top($cs.xs)
+  margin-bottom: - $cs.xs
+
+.message
+  display: block
+  font-size: .9rem
+
+  height: 0
+  box-sizing: border-box
+  overflow: hidden
+  opacity: 0
+  transition: opacity $ad.m
+
+  span
+    display: inline-block
+
+  .name
+    font-weight: $fw.bold
+
+  &.show
+    height: auto
+    transition: opacity $ad.m
+    opacity: 1
+
+  .icon
+    font-size: 1.15rem
+    margin-right: $cs.xxs
+    vertical-align: text-top
+    flex-grow: 0
+    flex-shrink: 0
+
+.err
+  color: $c-error
+
+.warn
+  color: $tc-warning
+
+.disabled .info-area
+    opacity: .4

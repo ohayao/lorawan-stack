@@ -1,0 +1,6 @@
+{
+    "i18n-ally.localesPaths": [
+        "pkg/i18n",
+        "pkg/webui/locales"
+    ]
+}

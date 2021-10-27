@@ -1,0 +1,88 @@
+// Copyright © 2019 The Things Network Foundation, The Things Industries B.V.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+.filters
+  display: flex
+  justify-content: space-between
+  align-items: center
+  padding: $cs.s 0
+  flex-wrap: wrap
+
+  &.top-rule
+    border-normal('bottom')
+    padding-bottom: 0
+
+    .filters-left
+      padding-bottom: 0
+
+    +media-query($bp.xs)
+      .filters-left
+        padding-bottom: $cs.s
+        flex-basis: 100%
+
+      .tabs
+        border-normal('bottom')
+
+      &.top-rule
+        border: none
+
+  &-left
+    flex-basis: auto
+    padding: $cs.xxs $cs.s $cs.xxs 0
+
+  &-right
+    flex: 1
+    display: flex
+    justify-content: flex-end
+    align-items: center
+    gap: $cs.s
+
+    +media-query($bp.xs)
+      justify-content: flex-start
+      max-width: none
+      flex-basis: 100%
+      flex-wrap: wrap
+
+      .search-bar
+        width: 100%
+
+.action-items
+  display: flex
+  flex-flow: wrap
+  gap: $cs.xs
+
+.search-bar
+  min-width: 15rem
+
+.page
+  margin-top: $ls.s
+
+.tabs
+  margin: 0
+
+.table-title
+  padding-left: $cs.m
+  color: $tc-deep-gray
+
+  +media-query($bp.xs)
+    padding-bottom: $cs.s
+    padding-left: 0
+
+.error-message
+  z-index: $zi.overlay + 1
+  position: absolute
+  top: 5rem
+  left: 50%
+  transform: translate(-50%, 0)
+  color: $tc-error

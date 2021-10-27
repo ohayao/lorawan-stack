@@ -1,0 +1,70 @@
+// Copyright © 2019 The Things Network Foundation, The Things Industries B.V.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+.app
+  height: 100%
+  width: 100%
+
+.main
+  position: relative
+  display: flex
+  flex-direction: column
+  +media-query-min($bp.s)
+    min-height: "calc(100vh - %s - %s)" % ($header-height $footer-height)
+  +media-query($bp.s)
+    min-height: "calc(100vh - %s - %s)" % ($header-height-mobile $footer-height)
+  +media-query($bp.xs)
+    min-height: "calc(100vh - %s - %s)" % ($header-height-mobile $footer-height * 2)
+
+// Global classes attached by the sidebar component.
+:global(.with-sidebar) .main
+  +media-query-min($bp.s)
+    padding-left: $sidebar-width
+  +media-query-between($bp.s, $bp.m)
+    padding-left: $sidebar-width-minimized
+
+:global(.sidebar-minimized) .main
+  +media-query-min($bp.s)
+    padding-left: $sidebar-width-minimized
+
+:global(.sidebar-transitioned) .main
+  +media-query-min($bp.s)
+    sidebar-transition(padding-left)
+
+.content
+  position: relative
+  flex: 1
+  display: flex
+  flex-direction: column
+
+.stage
+  flex: 1
+  &:not(.stage-flex)
+    padding-bottom: $ls.xxs
+  &-flex
+    display: flex
+    flex-direction: column
+    overflow-y: auto
+
+.mobile-breadcrumbs
+  +media-query-min($bp.s)
+    display: none
+  +media-query($bp.s)
+    display: block
+
+.desktop-breadcrumbs
+  +media-query-min($bp.s)
+    display: block
+  +media-query($bp.s)
+    display: none

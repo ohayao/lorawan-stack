@@ -1,0 +1,189 @@
+extends:
+  - ttn
+  - plugin:jest/recommended
+  - plugin:jsdoc/recommended
+  - plugin:import/recommended
+  - plugin:cypress/recommended
+  - prettier
+
+parser: babel-eslint
+
+plugins:
+  - jsdoc
+  - prettier
+  - import
+  - cypress
+  - prefer-arrow
+
+settings:
+  import/ignore:
+    - node_modules
+    - sdk
+  import/resolver:
+    webpack:
+      config: './config/webpack.config.babel.js'
+
+env:
+  node: true
+  jest: true
+
+globals:
+  shallow: true
+  render: true
+  mount: true
+  snapshotDiff: true
+
+parserOptions:
+  ecmaFeatures:
+    # Remove after migration.
+    legacyDecorators: true
+
+rules:
+  prettier/prettier: error
+
+  # Enforce import order.
+  import/order:
+    - warn
+    - groups:
+      - builtin
+      - external
+      - internal
+      - parent
+      - sibling
+      - index
+      newlines-between: always
+      pathGroups:
+      - pattern: "\\@{ttn-lw,console,account}/constants"
+        group: internal
+        position: after
+      - pattern: "\\@{console,account}/api"
+        group: internal
+        position: after
+      - pattern: "\\@ttn-lw/components/**"
+        group: internal
+        position: after
+      - pattern: "\\@ttn-lw/containers/**"
+        group: internal
+        position: after
+      - pattern: "\\@ttn-lw/lib/components/**"
+        group: internal
+        position: after
+      - pattern: "\\@{console,account}/components/**"
+        group: internal
+        position: after
+      - pattern: "\\@{console,account}/containers/**"
+        group: internal
+        position: after
+      - pattern: "\\@{console,account}/lib/components/**"
+        group: internal
+        position: after
+      - pattern: "\\@{console,account}/views/**"
+        group: internal
+        position: after
+      - pattern: "\\@ttn-lw/lib/**"
+        group: internal
+        position: after
+      - pattern: "\\@{console,account}/lib/**"
+        group: internal
+        position: after
+      - pattern: "\\@{console,account}/store/actions/**"
+        group: internal
+        position: after
+      - pattern: "\\@{console,account}/store/reducers/**"
+        group: internal
+        position: after
+      - pattern: "\\@{console,account}/store/selectors/**"
+        group: internal
+        position: after
+      - pattern: "\\@{console,account}/store/middleware/**"
+        group: internal
+        position: after
+      - pattern: "(\\@assets/**|\\@ttn-lw/styles/**)"
+        group: sibling
+        position: after
+      - pattern: "./*.styl"
+        group: sibling
+        position: after
+
+  # Prevent superfluous path traversions in import statements.
+  import/no-useless-path-segments:
+    - error
+    - noUselessIndex: true
+
+  # Enforce newlines after import statements.
+  import/newline-after-import: warn
+
+  import/no-named-as-default: off
+
+  jest/no-large-snapshots:
+    - warn
+    - maxSize: 400
+
+  jest/no-conditional-expect: off
+  jest/no-try-expect: off
+  jest/no-done-callback: off
+  jest/expect-expect: off
+
+  # Change to `error` after https://github.com/TheThingsNetwork/lorawan-stack/issues/1086
+  # is resolved.
+
+  # Prevent extraneous defaultProps on components.
+  react/default-props-match-prop-types: error
+  # Enforce a defaultProps definition for every prop that is not a required prop.
+  react/require-default-props: error
+  # Prevent definitions of unused prop types.
+  react/no-unused-prop-types: error
+  # Prevent missing props validation in a React component definition.
+  react/prop-types: error
+  # Enforce propTypes declarations alphabetical sorting.
+  react/sort-prop-types: warn
+  # Forbid using another component's prop types unless they are explicitly imported/exported.
+  react/forbid-foreign-prop-types: off
+  # Prevent undefined components.
+  react/jsx-no-undef: warn
+  # Prevent vague prop types.
+  react/forbid-prop-types:
+    - warn
+    - forbid:
+        - any
+        - array
+        - object
+      checkContextTypes: true
+      checkChildContextTypes: true
+
+  # Warn on console occurrences
+  no-console:
+    - warn
+
+  # Enforce capitalized comments.
+  capitalized-comments:
+    - warn
+    - always
+    - ignoreConsecutiveComments: true
+
+  jsdoc/require-jsdoc: off
+  jsdoc/require-hyphen-before-param-description: warn
+  jsdoc/check-indentation: warn
+  jsdoc/require-description-complete-sentence: warn
+
+  prefer-arrow/prefer-arrow-functions:
+    - warn
+    - disallowPrototype: true
+      singleReturnOnly: false
+      classPropertiesAllowed: false
+      allowStandaloneDeclarations: false
+
+  arrow-body-style:
+    - warn
+    - as-needed
+
+# Overwrite jest's expect rules for cypress test files, which uses a different
+# assertion syntax.
+overrides:
+  - files: '*.spec.js'
+    rules:
+      jest/valid-expect: off
+      no-invalid-this: off
+  - files: 'cypress/plugins/**/*.js'
+    rules:
+      import/no-commonjs: off
