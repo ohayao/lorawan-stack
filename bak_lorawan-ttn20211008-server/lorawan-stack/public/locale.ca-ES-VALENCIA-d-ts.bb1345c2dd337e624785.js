@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.ca-ES-VALENCIA-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/ca-ES-VALENCIA.d.ts":function(t,a,o){"use strict";o.r(a)},"./node_modules/@formatjs/intl-numberformat/locale-data/ca-ES-VALENCIA.d.ts":function(t,a,o){"use strict";o.r(a)}}]);

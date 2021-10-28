@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale-display-names.saq-d-ts"],{"./node_modules/@formatjs/intl-displaynames/locale-data/saq.d.ts":function(s,a,n){"use strict";n.r(a)}}]);

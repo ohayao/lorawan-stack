@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale-display-names.ff-Adlm-SL-d-ts"],{"./node_modules/@formatjs/intl-displaynames/locale-data/ff-Adlm-SL.d.ts":function(s,a,d){"use strict";d.r(a)}}]);

@@ -1,0 +1,306 @@
+project_name: lorawan-stack
+
+changelog:
+  skip: true
+
+release:
+  prerelease: auto
+
+builds:
+  - id: stack
+    main: ./cmd/ttn-lw-stack
+    binary: ttn-lw-stack
+    ldflags:
+    - -s
+    - -w
+    - -X go.thethings.network/lorawan-stack/v3/pkg/version.BuildDate={{.Date}}
+    - -X go.thethings.network/lorawan-stack/v3/pkg/version.GitCommit={{.ShortCommit}}
+    - -X go.thethings.network/lorawan-stack/v3/pkg/version.TTN={{.Version}}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - 386
+      - amd64
+      - arm
+      - arm64
+    goarm:
+      - 6
+      - 7
+    ignore:
+      - goos: darwin
+        goarch: 386
+
+  - id: cli
+    main: ./cmd/ttn-lw-cli
+    binary: ttn-lw-cli
+    ldflags:
+    - -s
+    - -w
+    - -X go.thethings.network/lorawan-stack/v3/pkg/version.BuildDate={{.Date}}
+    - -X go.thethings.network/lorawan-stack/v3/pkg/version.GitCommit={{.ShortCommit}}
+    - -X go.thethings.network/lorawan-stack/v3/pkg/version.TTN={{.Version}}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - 386
+      - amd64
+      - arm
+      - arm64
+    goarm:
+      - 6
+      - 7
+    ignore:
+      - goos: darwin
+        goarch: 386
+
+archives:
+  - id: stack
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
+    builds:
+      - cli
+      - stack
+    files:
+      - LICENSE
+      - README.md
+      - public/**
+      - config/completion/*/*
+    wrap_in_directory: true
+    format_overrides:
+      - goos: windows
+        format: zip
+
+  - id: cli
+    name_template: "{{ .ProjectName }}-cli_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
+    builds:
+      - cli
+    files:
+      - LICENSE
+      - README.md
+      - config/completion/*/*ttn-lw-cli*
+    wrap_in_directory: true
+    format_overrides:
+      - goos: windows
+        format: zip
+
+nfpms:
+  - id: stack
+    builds:
+      - cli
+      - stack
+    vendor: The Things Network
+    homepage: https://www.thethingsnetwork.org
+    maintainer: The Things Network Foundation <stack@thethingsnetwork.org>
+    description: The Things Stack for LoRaWAN
+    license: Apache 2.0
+    formats:
+      - deb
+      - rpm
+    recommends:
+      - redis
+      - cockroach
+    contents:
+      - src: "public/**"
+        dst: "/srv/ttn-lorawan/public"
+      - src: "config/completion/bash/*"
+        dst: "/usr/share/bash-completion/completions"
+      - src: "config/completion/fish/*"
+        dst: "/usr/share/fish/vendor_completions.d"
+      - src: "config/completion/zsh/*"
+        dst: "/usr/share/zsh/vendor-completions"
+
+snapcrafts:
+  - id: stack
+    builds:
+      - cli
+      - stack
+    name: ttn-lw-stack
+    summary: The Things Stack for LoRaWAN
+    description: The Things Stack for LoRaWAN
+    grade: stable
+    confinement: strict
+    publish: true
+    extra_files:
+      - source: config/snap/ttn-lw-stack.wrapper
+        destination: ttn-lw-stack.wrapper
+        mode: 0755
+      - source: config/snap/ttn-lw-cli.wrapper
+        destination: ttn-lw-cli.wrapper
+        mode: 0755
+    apps:
+      ttn-lw-stack:
+        plugs: [ home, network, network-bind ]
+        command: ttn-lw-stack.wrapper
+        completer: config/completion/bash/ttn-lw-stack
+      ttn-lw-cli:
+        plugs: [ home, network, network-bind ]
+        command: ttn-lw-cli.wrapper
+        completer: config/completion/bash/ttn-lw-cli-snap
+
+brews:
+  - name: ttn-lw-stack
+    ids:
+      - stack
+    tap:
+      owner: TheThingsNetwork
+      name: homebrew-lorawan-stack
+    commit_author:
+      name: ttn-ci
+      email: stack@thethingsnetwork.org
+    homepage: https://www.thethingsnetwork.org
+    description: The Things Stack for LoRaWAN
+    conflicts:
+      - ttn-lw-cli
+    skip_upload: auto
+    install: |
+      bin.install "ttn-lw-cli"
+      libexec.install %w[ttn-lw-stack public]
+      env = {
+          :TTN_LW_HTTP_STATIC_SEARCH_PATH => libexec/"public"
+      }
+      (bin/"ttn-lw-stack").write_env_script libexec/"ttn-lw-stack", env
+      bash_completion.install "config/completion/bash/ttn-lw-cli"
+      zsh_completion.install "config/completion/zsh/_ttn-lw-cli"
+      fish_completion.install "config/completion/fish/ttn-lw-cli.fish"
+      bash_completion.install "config/completion/bash/ttn-lw-stack"
+      zsh_completion.install "config/completion/zsh/_ttn-lw-stack"
+      fish_completion.install "config/completion/fish/ttn-lw-stack.fish"
+
+  - name: ttn-lw-cli
+    ids:
+      - cli
+    tap:
+      owner: TheThingsNetwork
+      name: homebrew-lorawan-stack
+    commit_author:
+      name: ttn-ci
+      email: stack@thethingsnetwork.org
+    homepage: https://www.thethingsnetwork.org
+    description: CLI of The Things Stack for LoRaWAN
+    conflicts:
+      - ttn-lw-stack
+    skip_upload: auto
+    install: |
+      bin.install "ttn-lw-cli"
+      bash_completion.install "config/completion/bash/ttn-lw-cli"
+      zsh_completion.install "config/completion/zsh/_ttn-lw-cli"
+      fish_completion.install "config/completion/fish/ttn-lw-cli.fish"
+
+blobs:
+  - provider: s3
+    # NOTE: GoReleaser documentation says that bucket is a template, but it's not.
+    bucket: the-things-stack-releases
+    ids:
+    - stack
+    - cli
+    folder: "{{ .Version }}"
+    extra_files:
+    - glob: ./CHANGELOG.md
+
+dockers:
+  - goos: linux
+    goarch: amd64
+    dockerfile: Dockerfile
+    binaries:
+      - ttn-lw-cli
+      - ttn-lw-stack
+    use_buildx: true
+    build_flag_templates:
+      - --platform=linux/amd64
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.vendor=The Things Network Foundation"
+      - "--label=org.opencontainers.image.title=The Things Stack"
+      - "--label=org.opencontainers.image.url=https://www.thethingsindustries.com/docs"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+    image_templates:
+      - 'thethingsnetwork/lorawan-stack:{{ .Major }}.{{ .Minor }}-amd64'
+      - 'thethingsnetwork/lorawan-stack:{{ .Version }}-amd64'
+      - 'ghcr.io/thethingsnetwork/lorawan-stack:{{ .Major }}.{{ .Minor }}-amd64'
+      - 'ghcr.io/thethingsnetwork/lorawan-stack:{{ .Version }}-amd64'
+    skip_push: false
+    extra_files:
+      - data
+      - public
+  - goos: linux
+    goarch: arm64
+    dockerfile: Dockerfile
+    binaries:
+      - ttn-lw-cli
+      - ttn-lw-stack
+    use_buildx: true
+    build_flag_templates:
+      - --platform=linux/arm64/v8
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.vendor=The Things Network Foundation"
+      - "--label=org.opencontainers.image.title=The Things Stack"
+      - "--label=org.opencontainers.image.url=https://www.thethingsindustries.com/docs"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+    image_templates:
+      - 'thethingsnetwork/lorawan-stack:{{ .Major }}.{{ .Minor }}-arm64'
+      - 'thethingsnetwork/lorawan-stack:{{ .Version }}-arm64'
+      - 'ghcr.io/thethingsnetwork/lorawan-stack:{{ .Major }}.{{ .Minor }}-arm64'
+      - 'ghcr.io/thethingsnetwork/lorawan-stack:{{ .Version }}-arm64'
+    skip_push: false
+    extra_files:
+      - data
+      - public
+  - goos: linux
+    goarch: arm
+    goarm: 7
+    dockerfile: Dockerfile
+    binaries:
+      - ttn-lw-cli
+      - ttn-lw-stack
+    use_buildx: true
+    build_flag_templates:
+      - --platform=linux/arm/v7
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.vendor=The Things Network Foundation"
+      - "--label=org.opencontainers.image.title=The Things Stack"
+      - "--label=org.opencontainers.image.url=https://www.thethingsindustries.com/docs"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+    image_templates:
+      - 'thethingsnetwork/lorawan-stack:{{ .Major }}.{{ .Minor }}-armv7'
+      - 'thethingsnetwork/lorawan-stack:{{ .Version }}-armv7'
+      - 'ghcr.io/thethingsnetwork/lorawan-stack:{{ .Major }}.{{ .Minor }}-armv7'
+      - 'ghcr.io/thethingsnetwork/lorawan-stack:{{ .Version }}-armv7'
+    skip_push: false
+    extra_files:
+      - data
+      - public
+docker_manifests:
+  - name_template: thethingsnetwork/lorawan-stack:{{ .Major }}.{{ .Minor }}
+    image_templates:
+      - thethingsnetwork/lorawan-stack:{{ .Major }}.{{ .Minor }}-amd64
+      - thethingsnetwork/lorawan-stack:{{ .Major }}.{{ .Minor }}-arm64
+      - thethingsnetwork/lorawan-stack:{{ .Major }}.{{ .Minor }}-armv7
+  - name_template: thethingsnetwork/lorawan-stack:{{ .Version }}
+    image_templates:
+      - thethingsnetwork/lorawan-stack:{{ .Version }}-amd64
+      - thethingsnetwork/lorawan-stack:{{ .Version }}-arm64
+      - thethingsnetwork/lorawan-stack:{{ .Version }}-armv7
+  - name_template: ghcr.io/thethingsnetwork/lorawan-stack:{{ .Major }}.{{ .Minor }}
+    image_templates:
+      - ghcr.io/thethingsnetwork/lorawan-stack:{{ .Major }}.{{ .Minor }}-amd64
+      - ghcr.io/thethingsnetwork/lorawan-stack:{{ .Major }}.{{ .Minor }}-arm64
+      - ghcr.io/thethingsnetwork/lorawan-stack:{{ .Major }}.{{ .Minor }}-armv7
+  - name_template: ghcr.io/thethingsnetwork/lorawan-stack:{{ .Version }}
+    image_templates:
+      - ghcr.io/thethingsnetwork/lorawan-stack:{{ .Version }}-amd64
+      - ghcr.io/thethingsnetwork/lorawan-stack:{{ .Version }}-arm64
+      - ghcr.io/thethingsnetwork/lorawan-stack:{{ .Version }}-armv7
+
+signs:
+  - artifacts: checksum
+    args: ["--pinentry-mode=loopback", "--no-tty", "--passphrase-fd", "0", "--batch", "--output", "${signature}", "--detach-sign", "-u", "{{ .Env.SIGN_KEY_NAME }}", "${artifact}"]
+    stdin_file: /tmp/gpg_passphrase

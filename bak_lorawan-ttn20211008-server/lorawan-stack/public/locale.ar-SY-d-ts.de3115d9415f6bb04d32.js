@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.ar-SY-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/ar-SY.d.ts":function(t,a,o){"use strict";o.r(a)},"./node_modules/@formatjs/intl-numberformat/locale-data/ar-SY.d.ts":function(t,a,o){"use strict";o.r(a)}}]);

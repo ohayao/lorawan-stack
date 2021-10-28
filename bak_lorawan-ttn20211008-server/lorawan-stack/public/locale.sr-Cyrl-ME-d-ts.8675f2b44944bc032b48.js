@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.sr-Cyrl-ME-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/sr-Cyrl-ME.d.ts":function(t,o,s){"use strict";s.r(o)},"./node_modules/@formatjs/intl-numberformat/locale-data/sr-Cyrl-ME.d.ts":function(t,o,s){"use strict";s.r(o)}}]);

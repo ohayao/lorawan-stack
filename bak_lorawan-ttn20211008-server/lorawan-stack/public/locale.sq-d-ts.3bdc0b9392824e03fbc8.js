@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.sq-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/sq.d.ts":function(t,o,s){"use strict";s.r(o)},"./node_modules/@formatjs/intl-numberformat/locale-data/sq.d.ts":function(t,o,s){"use strict";s.r(o)}}]);

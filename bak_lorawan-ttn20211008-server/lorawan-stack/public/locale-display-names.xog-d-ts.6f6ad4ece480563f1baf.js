@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale-display-names.xog-d-ts"],{"./node_modules/@formatjs/intl-displaynames/locale-data/xog.d.ts":function(s,o,a){"use strict";a.r(o)}}]);

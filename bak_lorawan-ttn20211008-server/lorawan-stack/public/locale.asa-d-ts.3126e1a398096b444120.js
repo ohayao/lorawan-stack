@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.asa-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/asa.d.ts":function(a,t,o){"use strict";o.r(t)},"./node_modules/@formatjs/intl-numberformat/locale-data/asa.d.ts":function(a,t,o){"use strict";o.r(t)}}]);

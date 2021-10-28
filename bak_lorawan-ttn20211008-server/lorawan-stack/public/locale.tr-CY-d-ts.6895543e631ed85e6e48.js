@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.tr-CY-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/tr-CY.d.ts":function(t,o,a){"use strict";a.r(o)},"./node_modules/@formatjs/intl-numberformat/locale-data/tr-CY.d.ts":function(t,o,a){"use strict";a.r(o)}}]);

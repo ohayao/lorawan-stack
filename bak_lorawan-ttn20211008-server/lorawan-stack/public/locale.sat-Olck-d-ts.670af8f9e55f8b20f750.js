@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.sat-Olck-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/sat-Olck.d.ts":function(t,a,o){"use strict";o.r(a)},"./node_modules/@formatjs/intl-numberformat/locale-data/sat-Olck.d.ts":function(t,a,o){"use strict";o.r(a)}}]);

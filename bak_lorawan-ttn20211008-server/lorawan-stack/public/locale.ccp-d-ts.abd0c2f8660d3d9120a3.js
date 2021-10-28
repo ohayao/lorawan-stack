@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.ccp-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/ccp.d.ts":function(t,o,c){"use strict";c.r(o)},"./node_modules/@formatjs/intl-numberformat/locale-data/ccp.d.ts":function(t,o,c){"use strict";c.r(o)}}]);

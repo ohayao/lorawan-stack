@@ -1,0 +1,13 @@
+{
+  "projectId": "uqdraf",
+  "viewportHeight": 900,
+  "viewportWidth": 1440,
+  "defaultCommandTimeout": 10000,
+  "ignoreTestFiles": "!*.spec.js",
+  "animationDistanceThreshold": 3,
+  "video": false,
+  "retries": {
+    "runMode": 1,
+    "openMode": 0
+  }
+}

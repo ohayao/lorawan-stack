@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.en-US-d-ts"],{"./node_modules/@formatjs/intl-relativetimeformat/locale-data/en-US.d.ts":function(e,o,t){"use strict";t.r(o)}}]);

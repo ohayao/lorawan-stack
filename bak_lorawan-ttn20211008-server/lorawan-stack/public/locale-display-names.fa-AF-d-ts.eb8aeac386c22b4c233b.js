@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale-display-names.fa-AF-d-ts"],{"./node_modules/@formatjs/intl-displaynames/locale-data/fa-AF.d.ts":function(a,s,n){"use strict";n.r(s)}}]);

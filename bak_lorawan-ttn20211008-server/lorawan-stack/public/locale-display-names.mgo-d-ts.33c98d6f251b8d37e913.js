@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale-display-names.mgo-d-ts"],{"./node_modules/@formatjs/intl-displaynames/locale-data/mgo.d.ts":function(s,o,a){"use strict";a.r(o)}}]);

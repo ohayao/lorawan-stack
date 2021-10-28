@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale-display-names.sat-Olck-d-ts"],{"./node_modules/@formatjs/intl-displaynames/locale-data/sat-Olck.d.ts":function(s,a,l){"use strict";l.r(a)}}]);

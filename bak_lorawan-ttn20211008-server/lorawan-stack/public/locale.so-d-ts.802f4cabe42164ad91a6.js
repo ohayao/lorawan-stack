@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.so-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/so.d.ts":function(o,t,s){"use strict";s.r(t)},"./node_modules/@formatjs/intl-numberformat/locale-data/so.d.ts":function(o,t,s){"use strict";s.r(t)}}]);

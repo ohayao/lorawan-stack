@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.pa-Arab-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/pa-Arab.d.ts":function(a,t,o){"use strict";o.r(t)},"./node_modules/@formatjs/intl-numberformat/locale-data/pa-Arab.d.ts":function(a,t,o){"use strict";o.r(t)}}]);

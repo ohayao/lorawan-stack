@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale-display-names.shi-Tfng-d-ts"],{"./node_modules/@formatjs/intl-displaynames/locale-data/shi-Tfng.d.ts":function(s,n,a){"use strict";a.r(n)}}]);

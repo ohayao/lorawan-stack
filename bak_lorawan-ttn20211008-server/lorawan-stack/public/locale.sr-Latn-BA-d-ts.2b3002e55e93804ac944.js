@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.sr-Latn-BA-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/sr-Latn-BA.d.ts":function(t,a,o){"use strict";o.r(a)},"./node_modules/@formatjs/intl-numberformat/locale-data/sr-Latn-BA.d.ts":function(t,a,o){"use strict";o.r(a)}}]);

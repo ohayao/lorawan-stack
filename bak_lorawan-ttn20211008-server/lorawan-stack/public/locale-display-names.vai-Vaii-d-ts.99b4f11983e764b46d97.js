@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale-display-names.vai-Vaii-d-ts"],{"./node_modules/@formatjs/intl-displaynames/locale-data/vai-Vaii.d.ts":function(a,i,s){"use strict";s.r(i)}}]);

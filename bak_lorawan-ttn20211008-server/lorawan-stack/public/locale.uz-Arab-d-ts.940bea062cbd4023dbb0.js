@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.uz-Arab-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/uz-Arab.d.ts":function(t,a,o){"use strict";o.r(a)},"./node_modules/@formatjs/intl-numberformat/locale-data/uz-Arab.d.ts":function(t,a,o){"use strict";o.r(a)}}]);

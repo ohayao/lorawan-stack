@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.sw-KE-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/sw-KE.d.ts":function(t,o,s){"use strict";s.r(o)},"./node_modules/@formatjs/intl-numberformat/locale-data/sw-KE.d.ts":function(t,o,s){"use strict";s.r(o)}}]);

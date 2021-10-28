@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale-display-names.nyn-d-ts"],{"./node_modules/@formatjs/intl-displaynames/locale-data/nyn.d.ts":function(n,s,a){"use strict";a.r(s)}}]);

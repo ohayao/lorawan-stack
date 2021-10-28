@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "paths": {
+      "@console/*": ["console/*"],
+      "@account/*": ["account/*"],
+      "@ttn-lw/*": ["./*"],
+      "@assets/*": ["assets/*"]
+    }
+  },
+}

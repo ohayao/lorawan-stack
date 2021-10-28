@@ -1,0 +1,102 @@
+// Copyright © 2020 The Things Network Foundation, The Things Industries B.V.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package webmiddleware
+
+import (
+	"net/http"
+	"strings"
+	"time"
+
+	"github.com/felixge/httpsnoop"
+	"go.thethings.network/lorawan-stack/v3/pkg/auth"
+	"go.thethings.network/lorawan-stack/v3/pkg/log"
+	"go.thethings.network/lorawan-stack/v3/pkg/webhandlers"
+)
+
+func shouldSuppressError(httpStatus int) bool {
+	return httpStatus == http.StatusTooManyRequests
+}
+
+// Log returns a middleware that logs requests.
+// If logger is nil, the logger will be extracted from the context.
+func Log(logger log.Interface, ignorePathsArray []string) MiddlewareFunc {
+	ignorePaths := make(map[string]struct{})
+	for _, path := range ignorePathsArray {
+		ignorePaths[path] = struct{}{}
+	}
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			logFields := log.Fields(
+				"http.method", r.Method,
+				"http.path", r.URL.Path,
+				"peer.address", r.RemoteAddr,
+				"request_id", r.Header.Get(requestIDHeader),
+			)
+			if xRealIP := r.Header.Get("X-Real-Ip"); xRealIP != "" {
+				logFields = logFields.WithField("peer.real_ip", xRealIP)
+			}
+
+			ctx, getError := webhandlers.NewContextWithErrorValue(r.Context())
+			requestLogger := logger
+			if requestLogger == nil {
+				requestLogger = log.FromContext(ctx)
+			}
+			requestLogger = requestLogger.WithFields(logFields)
+
+			r = r.WithContext(log.NewContext(ctx, requestLogger))
+			metrics := httpsnoop.CaptureMetrics(next, w, r)
+
+			if metrics.Code < 400 {
+				if _, ignore := ignorePaths[r.URL.Path]; ignore {
+					return
+				}
+			}
+			if shouldSuppressError(metrics.Code) {
+				return
+			}
+
+			logFields = logFields.With(map[string]interface{}{
+				"http.status": metrics.Code,
+				"duration":    metrics.Duration.Round(time.Microsecond * 100),
+			})
+			if authorization := r.Header.Get("Authorization"); authorization != "" {
+				parts := strings.SplitN(authorization, " ", 2)
+				if len(parts) == 2 && strings.ToLower(parts[0]) == "bearer" {
+					if tokenType, tokenID, _, err := auth.SplitToken(parts[1]); err == nil {
+						logFields = logFields.WithFields(log.Fields(
+							"auth.token_type", tokenType.String(),
+							"auth.token_id", tokenID,
+						))
+					}
+				}
+			}
+			if err := getError(); err != nil {
+				logFields = logFields.WithError(err)
+			}
+			requestLogger = requestLogger.WithFields(logFields)
+
+			switch {
+			case metrics.Code == http.StatusNotImplemented:
+				requestLogger.Info("Client called unimplemented route")
+			case metrics.Code >= 500:
+				requestLogger.Error("Server error")
+			case metrics.Code >= 400:
+				requestLogger.Info("Client error")
+			default:
+				requestLogger.Info("Request handled")
+			}
+		})
+	}
+}

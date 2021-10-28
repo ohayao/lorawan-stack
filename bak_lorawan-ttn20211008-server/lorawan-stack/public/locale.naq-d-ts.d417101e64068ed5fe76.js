@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.naq-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/naq.d.ts":function(t,a,o){"use strict";o.r(a)},"./node_modules/@formatjs/intl-numberformat/locale-data/naq.d.ts":function(t,a,o){"use strict";o.r(a)}}]);

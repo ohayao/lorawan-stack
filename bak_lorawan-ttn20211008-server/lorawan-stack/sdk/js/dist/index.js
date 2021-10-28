@@ -1,0 +1,102 @@
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "STACK_COMPONENTS_MAP", {
+  enumerable: true,
+  get: function get() {
+    return _constants.STACK_COMPONENTS_MAP;
+  }
+});
+Object.defineProperty(exports, "AUTHORIZATION_MODES", {
+  enumerable: true,
+  get: function get() {
+    return _constants.AUTHORIZATION_MODES;
+  }
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _applications = _interopRequireDefault(require("./service/applications"));
+
+var _configuration = _interopRequireDefault(require("./service/configuration"));
+
+var _api = _interopRequireDefault(require("./api"));
+
+var _gateways = _interopRequireDefault(require("./service/gateways"));
+
+var _joinServer = _interopRequireDefault(require("./service/join-server"));
+
+var _networkServer = _interopRequireDefault(require("./service/network-server"));
+
+var _identityServer = _interopRequireDefault(require("./service/identity-server"));
+
+var _applicationServer = _interopRequireDefault(require("./service/application-server"));
+
+var _organizations = _interopRequireDefault(require("./service/organizations"));
+
+var _users = _interopRequireDefault(require("./service/users"));
+
+var _auth = _interopRequireDefault(require("./service/auth"));
+
+var _contactInfo = _interopRequireDefault(require("./service/contact-info"));
+
+var _packetBrokerAgent = _interopRequireDefault(require("./service/packet-broker-agent"));
+
+var _events = _interopRequireDefault(require("./util/events"));
+
+var _stackConfiguration = _interopRequireDefault(require("./util/stack-configuration"));
+
+var _constants = require("./util/constants");
+
+// Copyright © 2019 The Things Network Foundation, The Things Industries B.V.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+var TTS = function TTS(_ref) {
+  var authorization = _ref.authorization,
+      stackConfig = _ref.stackConfig,
+      connectionType = _ref.connectionType,
+      defaultUserId = _ref.defaultUserId,
+      axiosConfig = _ref.axiosConfig;
+  (0, _classCallCheck2["default"])(this, TTS);
+  var stackConfiguration = new _stackConfiguration["default"](stackConfig);
+  this.api = new _api["default"](connectionType, authorization, stackConfiguration, axiosConfig);
+  this.config = arguments.config;
+  this.Applications = new _applications["default"](this.api, {
+    defaultUserId: defaultUserId,
+    stackConfig: stackConfiguration
+  });
+  this.Configuration = new _configuration["default"](this.api.Configuration);
+  this.Gateways = new _gateways["default"](this.api, {
+    defaultUserId: defaultUserId,
+    stackConfig: stackConfiguration
+  });
+  this.Js = new _joinServer["default"](this.api.Js);
+  this.Ns = new _networkServer["default"](this.api.Ns);
+  this.Is = new _identityServer["default"](this.api.Is);
+  this.As = new _applicationServer["default"](this.api.AppAs);
+  this.Organizations = new _organizations["default"](this.api);
+  this.Users = new _users["default"](this.api);
+  this.Auth = new _auth["default"](this.api.EntityAccess);
+  this.ContactInfo = new _contactInfo["default"](this.api.ContactInfoRegistry);
+  this.PacketBrokerAgent = new _packetBrokerAgent["default"](this.api.Pba);
+  this.subscribe = _events["default"].subscribe;
+  this.unsubscribe = _events["default"].unsubscribe;
+};
+
+exports["default"] = TTS;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9pbmRleC5qcyJdLCJuYW1lcyI6WyJUVFMiLCJhdXRob3JpemF0aW9uIiwic3RhY2tDb25maWciLCJjb25uZWN0aW9uVHlwZSIsImRlZmF1bHRVc2VySWQiLCJheGlvc0NvbmZpZyIsInN0YWNrQ29uZmlndXJhdGlvbiIsIlN0YWNrQ29uZmlndXJhdGlvbiIsImFwaSIsIkFwaSIsImNvbmZpZyIsImFyZ3VtZW50cyIsIkFwcGxpY2F0aW9ucyIsIkNvbmZpZ3VyYXRpb24iLCJHYXRld2F5cyIsIkpzIiwiTnMiLCJJcyIsIkFzIiwiQXBwQXMiLCJPcmdhbml6YXRpb25zIiwiVXNlcnMiLCJBdXRoIiwiRW50aXR5QWNjZXNzIiwiQ29udGFjdEluZm8iLCJDb250YWN0SW5mb1JlZ2lzdHJ5IiwiUGFja2V0QnJva2VyQWdlbnQiLCJQYmEiLCJzdWJzY3JpYmUiLCJFdmVudEhhbmRsZXIiLCJ1bnN1YnNjcmliZSJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFjQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUE3QkE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7SUFtQk1BLEcsR0FDSixtQkFBd0Y7QUFBQSxNQUExRUMsYUFBMEUsUUFBMUVBLGFBQTBFO0FBQUEsTUFBM0RDLFdBQTJELFFBQTNEQSxXQUEyRDtBQUFBLE1BQTlDQyxjQUE4QyxRQUE5Q0EsY0FBOEM7QUFBQSxNQUE5QkMsYUFBOEIsUUFBOUJBLGFBQThCO0FBQUEsTUFBZkMsV0FBZSxRQUFmQSxXQUFlO0FBQUE7QUFDdEYsTUFBTUMsa0JBQWtCLEdBQUcsSUFBSUMsOEJBQUosQ0FBdUJMLFdBQXZCLENBQTNCO0FBRUEsT0FBS00sR0FBTCxHQUFXLElBQUlDLGVBQUosQ0FBUU4sY0FBUixFQUF3QkYsYUFBeEIsRUFBdUNLLGtCQUF2QyxFQUEyREQsV0FBM0QsQ0FBWDtBQUNBLE9BQUtLLE1BQUwsR0FBY0MsU0FBUyxDQUFDRCxNQUF4QjtBQUVBLE9BQUtFLFlBQUwsR0FBb0IsSUFBSUEsd0JBQUosQ0FBaUIsS0FBS0osR0FBdEIsRUFBMkI7QUFDN0NKLElBQUFBLGFBQWEsRUFBYkEsYUFENkM7QUFFN0NGLElBQUFBLFdBQVcsRUFBRUk7QUFGZ0MsR0FBM0IsQ0FBcEI7QUFJQSxPQUFLTyxhQUFMLEdBQXFCLElBQUlBLHlCQUFKLENBQWtCLEtBQUtMLEdBQUwsQ0FBU0ssYUFBM0IsQ0FBckI7QUFDQSxPQUFLQyxRQUFMLEdBQWdCLElBQUlBLG9CQUFKLENBQWEsS0FBS04sR0FBbEIsRUFBdUI7QUFDckNKLElBQUFBLGFBQWEsRUFBYkEsYUFEcUM7QUFFckNGLElBQUFBLFdBQVcsRUFBRUk7QUFGd0IsR0FBdkIsQ0FBaEI7QUFJQSxPQUFLUyxFQUFMLEdBQVUsSUFBSUEsc0JBQUosQ0FBTyxLQUFLUCxHQUFMLENBQVNPLEVBQWhCLENBQVY7QUFDQSxPQUFLQyxFQUFMLEdBQVUsSUFBSUEseUJBQUosQ0FBTyxLQUFLUixHQUFMLENBQVNRLEVBQWhCLENBQVY7QUFDQSxPQUFLQyxFQUFMLEdBQVUsSUFBSUEsMEJBQUosQ0FBTyxLQUFLVCxHQUFMLENBQVNTLEVBQWhCLENBQVY7QUFDQSxPQUFLQyxFQUFMLEdBQVUsSUFBSUEsNkJBQUosQ0FBTyxLQUFLVixHQUFMLENBQVNXLEtBQWhCLENBQVY7QUFDQSxPQUFLQyxhQUFMLEdBQXFCLElBQUlBLHlCQUFKLENBQWtCLEtBQUtaLEdBQXZCLENBQXJCO0FBQ0EsT0FBS2EsS0FBTCxHQUFhLElBQUlBLGlCQUFKLENBQVUsS0FBS2IsR0FBZixDQUFiO0FBQ0EsT0FBS2MsSUFBTCxHQUFZLElBQUlBLGdCQUFKLENBQVMsS0FBS2QsR0FBTCxDQUFTZSxZQUFsQixDQUFaO0FBQ0EsT0FBS0MsV0FBTCxHQUFtQixJQUFJQSx1QkFBSixDQUFnQixLQUFLaEIsR0FBTCxDQUFTaUIsbUJBQXpCLENBQW5CO0FBQ0EsT0FBS0MsaUJBQUwsR0FBeUIsSUFBSUEsNkJBQUosQ0FBc0IsS0FBS2xCLEdBQUwsQ0FBU21CLEdBQS9CLENBQXpCO0FBRUEsT0FBS0MsU0FBTCxHQUFpQkMsbUJBQWFELFNBQTlCO0FBQ0EsT0FBS0UsV0FBTCxHQUFtQkQsbUJBQWFDLFdBQWhDO0FBQ0QsQyIsInNvdXJjZXNDb250ZW50IjpbIi8vIENvcHlyaWdodCDCqSAyMDE5IFRoZSBUaGluZ3MgTmV0d29yayBGb3VuZGF0aW9uLCBUaGUgVGhpbmdzIEluZHVzdHJpZXMgQi5WLlxuLy9cbi8vIExpY2Vuc2VkIHVuZGVyIHRoZSBBcGFjaGUgTGljZW5zZSwgVmVyc2lvbiAyLjAgKHRoZSBcIkxpY2Vuc2VcIik7XG4vLyB5b3UgbWF5IG5vdCB1c2UgdGhpcyBmaWxlIGV4Y2VwdCBpbiBjb21wbGlhbmNlIHdpdGggdGhlIExpY2Vuc2UuXG4vLyBZb3UgbWF5IG9idGFpbiBhIGNvcHkgb2YgdGhlIExpY2Vuc2UgYXRcbi8vXG4vLyAgICAgaHR0cDovL3d3dy5hcGFjaGUub3JnL2xpY2Vuc2VzL0xJQ0VOU0UtMi4wXG4vL1xuLy8gVW5sZXNzIHJlcXVpcmVkIGJ5IGFwcGxpY2FibGUgbGF3IG9yIGFncmVlZCB0byBpbiB3cml0aW5nLCBzb2Z0d2FyZVxuLy8gZGlzdHJpYnV0ZWQgdW5kZXIgdGhlIExpY2Vuc2UgaXMgZGlzdHJpYnV0ZWQgb24gYW4gXCJBUyBJU1wiIEJBU0lTLFxuLy8gV0lUSE9VVCBXQVJSQU5USUVTIE9SIENPTkRJVElPTlMgT0YgQU5ZIEtJTkQsIGVpdGhlciBleHByZXNzIG9yIGltcGxpZWQuXG4vLyBTZWUgdGhlIExpY2Vuc2UgZm9yIHRoZSBzcGVjaWZpYyBsYW5ndWFnZSBnb3Zlcm5pbmcgcGVybWlzc2lvbnMgYW5kXG4vLyBsaW1pdGF0aW9ucyB1bmRlciB0aGUgTGljZW5zZS5cblxuaW1wb3J0IEFwcGxpY2F0aW9ucyBmcm9tICcuL3NlcnZpY2UvYXBwbGljYXRpb25zJ1xuaW1wb3J0IENvbmZpZ3VyYXRpb24gZnJvbSAnLi9zZXJ2aWNlL2NvbmZpZ3VyYXRpb24nXG5pbXBvcnQgQXBpIGZyb20gJy4vYXBpJ1xuaW1wb3J0IEdhdGV3YXlzIGZyb20gJy4vc2VydmljZS9nYXRld2F5cydcbmltcG9ydCBKcyBmcm9tICcuL3NlcnZpY2Uvam9pbi1zZXJ2ZXInXG5pbXBvcnQgTnMgZnJvbSAnLi9zZXJ2aWNlL25ldHdvcmstc2VydmVyJ1xuaW1wb3J0IElzIGZyb20gJy4vc2VydmljZS9pZGVudGl0eS1zZXJ2ZXInXG5pbXBvcnQgQXMgZnJvbSAnLi9zZXJ2aWNlL2FwcGxpY2F0aW9uLXNlcnZlcidcbmltcG9ydCBPcmdhbml6YXRpb25zIGZyb20gJy4vc2VydmljZS9vcmdhbml6YXRpb25zJ1xuaW1wb3J0IFVzZXJzIGZyb20gJy4vc2VydmljZS91c2VycydcbmltcG9ydCBBdXRoIGZyb20gJy4vc2VydmljZS9hdXRoJ1xuaW1wb3J0IENvbnRhY3RJbmZvIGZyb20gJy4vc2VydmljZS9jb250YWN0LWluZm8nXG5pbXBvcnQgUGFja2V0QnJva2VyQWdlbnQgZnJvbSAnLi9zZXJ2aWNlL3BhY2tldC1icm9rZXItYWdlbnQnXG5pbXBvcnQgRXZlbnRIYW5kbGVyIGZyb20gJy4vdXRpbC9ldmVudHMnXG5pbXBvcnQgU3RhY2tDb25maWd1cmF0aW9uIGZyb20gJy4vdXRpbC9zdGFjay1jb25maWd1cmF0aW9uJ1xuaW1wb3J0IHsgU1RBQ0tfQ09NUE9ORU5UU19NQVAsIEFVVEhPUklaQVRJT05fTU9ERVMgfSBmcm9tICcuL3V0aWwvY29uc3RhbnRzJ1xuXG5jbGFzcyBUVFMge1xuICBjb25zdHJ1Y3Rvcih7IGF1dGhvcml6YXRpb24sIHN0YWNrQ29uZmlnLCBjb25uZWN0aW9uVHlwZSwgZGVmYXVsdFVzZXJJZCwgYXhpb3NDb25maWcgfSkge1xuICAgIGNvbnN0IHN0YWNrQ29uZmlndXJhdGlvbiA9IG5ldyBTdGFja0NvbmZpZ3VyYXRpb24oc3RhY2tDb25maWcpXG5cbiAgICB0aGlzLmFwaSA9IG5ldyBBcGkoY29ubmVjdGlvblR5cGUsIGF1dGhvcml6YXRpb24sIHN0YWNrQ29uZmlndXJhdGlvbiwgYXhpb3NDb25maWcpXG4gICAgdGhpcy5jb25maWcgPSBhcmd1bWVudHMuY29uZmlnXG5cbiAgICB0aGlzLkFwcGxpY2F0aW9ucyA9IG5ldyBBcHBsaWNhdGlvbnModGhpcy5hcGksIHtcbiAgICAgIGRlZmF1bHRVc2VySWQsXG4gICAgICBzdGFja0NvbmZpZzogc3RhY2tDb25maWd1cmF0aW9uLFxuICAgIH0pXG4gICAgdGhpcy5Db25maWd1cmF0aW9uID0gbmV3IENvbmZpZ3VyYXRpb24odGhpcy5hcGkuQ29uZmlndXJhdGlvbilcbiAgICB0aGlzLkdhdGV3YXlzID0gbmV3IEdhdGV3YXlzKHRoaXMuYXBpLCB7XG4gICAgICBkZWZhdWx0VXNlcklkLFxuICAgICAgc3RhY2tDb25maWc6IHN0YWNrQ29uZmlndXJhdGlvbixcbiAgICB9KVxuICAgIHRoaXMuSnMgPSBuZXcgSnModGhpcy5hcGkuSnMpXG4gICAgdGhpcy5OcyA9IG5ldyBOcyh0aGlzLmFwaS5OcylcbiAgICB0aGlzLklzID0gbmV3IElzKHRoaXMuYXBpLklzKVxuICAgIHRoaXMuQXMgPSBuZXcgQXModGhpcy5hcGkuQXBwQXMpXG4gICAgdGhpcy5Pcmdhbml6YXRpb25zID0gbmV3IE9yZ2FuaXphdGlvbnModGhpcy5hcGkpXG4gICAgdGhpcy5Vc2VycyA9IG5ldyBVc2Vycyh0aGlzLmFwaSlcbiAgICB0aGlzLkF1dGggPSBuZXcgQXV0aCh0aGlzLmFwaS5FbnRpdHlBY2Nlc3MpXG4gICAgdGhpcy5Db250YWN0SW5mbyA9IG5ldyBDb250YWN0SW5mbyh0aGlzLmFwaS5Db250YWN0SW5mb1JlZ2lzdHJ5KVxuICAgIHRoaXMuUGFja2V0QnJva2VyQWdlbnQgPSBuZXcgUGFja2V0QnJva2VyQWdlbnQodGhpcy5hcGkuUGJhKVxuXG4gICAgdGhpcy5zdWJzY3JpYmUgPSBFdmVudEhhbmRsZXIuc3Vic2NyaWJlXG4gICAgdGhpcy51bnN1YnNjcmliZSA9IEV2ZW50SGFuZGxlci51bnN1YnNjcmliZVxuICB9XG59XG5cbmV4cG9ydCB7IFRUUyBhcyBkZWZhdWx0LCBTVEFDS19DT01QT05FTlRTX01BUCwgQVVUSE9SSVpBVElPTl9NT0RFUyB9XG4iXX0=

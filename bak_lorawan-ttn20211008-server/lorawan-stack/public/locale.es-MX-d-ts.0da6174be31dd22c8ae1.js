@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.es-MX-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/es-MX.d.ts":function(t,e,o){"use strict";o.r(e)},"./node_modules/@formatjs/intl-numberformat/locale-data/es-MX.d.ts":function(t,e,o){"use strict";o.r(e)}}]);

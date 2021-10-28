@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.se-FI-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/se-FI.d.ts":function(t,e,o){"use strict";o.r(e)},"./node_modules/@formatjs/intl-numberformat/locale-data/se-FI.d.ts":function(t,e,o){"use strict";o.r(e)}}]);

@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.ms-SG-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/ms-SG.d.ts":function(t,o,s){"use strict";s.r(o)},"./node_modules/@formatjs/intl-numberformat/locale-data/ms-SG.d.ts":function(t,o,s){"use strict";s.r(o)}}]);

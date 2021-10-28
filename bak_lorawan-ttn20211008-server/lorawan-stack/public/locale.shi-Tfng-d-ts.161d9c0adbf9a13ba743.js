@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.shi-Tfng-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/shi-Tfng.d.ts":function(t,o,s){"use strict";s.r(o)},"./node_modules/@formatjs/intl-numberformat/locale-data/shi-Tfng.d.ts":function(t,o,s){"use strict";s.r(o)}}]);

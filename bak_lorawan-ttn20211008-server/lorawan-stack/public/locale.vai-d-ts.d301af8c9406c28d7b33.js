@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.vai-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/vai.d.ts":function(t,a,o){"use strict";o.r(a)},"./node_modules/@formatjs/intl-numberformat/locale-data/vai.d.ts":function(t,a,o){"use strict";o.r(a)}}]);

@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.qu-EC-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/qu-EC.d.ts":function(t,o,a){"use strict";a.r(o)},"./node_modules/@formatjs/intl-numberformat/locale-data/qu-EC.d.ts":function(t,o,a){"use strict";a.r(o)}}]);

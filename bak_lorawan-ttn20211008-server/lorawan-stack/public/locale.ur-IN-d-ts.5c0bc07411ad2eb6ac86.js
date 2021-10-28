@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.ur-IN-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/ur-IN.d.ts":function(t,o,a){"use strict";a.r(o)},"./node_modules/@formatjs/intl-numberformat/locale-data/ur-IN.d.ts":function(t,o,a){"use strict";a.r(o)}}]);

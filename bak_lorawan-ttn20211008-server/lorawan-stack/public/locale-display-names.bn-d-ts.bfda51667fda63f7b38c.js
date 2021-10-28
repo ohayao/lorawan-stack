@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale-display-names.bn-d-ts"],{"./node_modules/@formatjs/intl-displaynames/locale-data/bn.d.ts":function(s,n,a){"use strict";a.r(n)}}]);

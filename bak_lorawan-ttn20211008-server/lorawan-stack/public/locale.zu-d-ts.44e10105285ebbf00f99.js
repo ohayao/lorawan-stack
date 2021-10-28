@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.zu-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/zu.d.ts":function(t,o,a){"use strict";a.r(o)},"./node_modules/@formatjs/intl-numberformat/locale-data/zu.d.ts":function(t,o,a){"use strict";a.r(o)}}]);

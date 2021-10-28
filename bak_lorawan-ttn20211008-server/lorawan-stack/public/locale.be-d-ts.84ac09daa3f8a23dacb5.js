@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.be-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/be.d.ts":function(t,e,o){"use strict";o.r(e)},"./node_modules/@formatjs/intl-numberformat/locale-data/be.d.ts":function(t,e,o){"use strict";o.r(e)}}]);

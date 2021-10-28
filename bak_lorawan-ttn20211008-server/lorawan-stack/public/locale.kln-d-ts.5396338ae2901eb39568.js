@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["locale.kln-d-ts"],{"./node_modules/@formatjs/intl-datetimeformat/locale-data/kln.d.ts":function(t,o,n){"use strict";n.r(o)},"./node_modules/@formatjs/intl-numberformat/locale-data/kln.d.ts":function(t,o,n){"use strict";n.r(o)}}]);
